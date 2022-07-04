@@ -9,7 +9,7 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 public interface PictureService {
-
+//komentatiii...
     FileSkeleton savePicture(MultipartFile file, int typeOfValidation) throws IOException, JAXBException, XMLValidationException;
     byte[] getPicture(String fileId) throws IOException, JAXBException, ItemNotFoundException;
 
