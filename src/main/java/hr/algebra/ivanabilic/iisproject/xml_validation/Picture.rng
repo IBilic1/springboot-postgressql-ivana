@@ -1,0 +1,23 @@
+<element name="fileSkeleton" xmlns="http://relaxng.org/ns/structure/1.0"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+    <element name="fileName">
+        <text/>
+    </element>
+    <element name="fileType">
+        <choice>
+            <value type="string">image/png</value>
+            <value type="string">image/jpg</value>
+            <value type="string">image/jpeg</value>
+        </choice>
+    </element>
+    <element name="contentLength">
+        <data type="long">
+            <param name="maxInclusive">10000000</param>
+        </data>
+    </element>
+    <element name="data">
+        <data type="base64Binary"></data>
+    </element>
+
+</element>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="FileName">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="50"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="FileType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="image/png"/>
+            <xs:enumeration value="image/jpeg"/>
+            <xs:enumeration value="image/jpg"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Length" >
+        <xs:restriction base="xs:int">
+            <xs:maxExclusive value="10000000"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:element name="fileSkeleton">
+        <xs:complexType>
+            <xs:sequence maxOccurs="1">
+                <xs:element name="fileName" type="FileName"/>
+                <xs:element name="fileType" type="FileType"/>
+                <xs:element name="contentLength" type="Length" />
+                <xs:element name="data" type="xs:base64Binary" />
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+
+</xs:schema>
