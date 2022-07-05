@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -25,7 +23,6 @@ public class AppUser {
     @Getter
     private String password;
 
-    @Transient
     @Getter
     @Setter
     private String salt;
@@ -38,7 +35,11 @@ public class AppUser {
     private Set<FileSkeleton> files;
 
 
-
+    public AppUser(String id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
 
     public AppUser(String username, String password) {
         this.username = username;

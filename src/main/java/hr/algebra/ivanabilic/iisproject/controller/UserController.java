@@ -5,6 +5,7 @@ import hr.algebra.ivanabilic.iisproject.entity.FileSkeleton;
 import hr.algebra.ivanabilic.iisproject.exception.ItemAlreadyExistsException;
 import hr.algebra.ivanabilic.iisproject.exception.ItemNotFoundException;
 import hr.algebra.ivanabilic.iisproject.responseEntity.ResponsePicture;
+import hr.algebra.ivanabilic.iisproject.responseEntity.User;
 import hr.algebra.ivanabilic.iisproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +26,12 @@ public class UserController {
     }
 
     @PostMapping
-    public AppUser post(@RequestBody AppUser user) throws ItemAlreadyExistsException {
+    public User post(@RequestBody User user) throws ItemAlreadyExistsException {
         return authService.create(user);
     }
 
     @PostMapping(path = "/login")
-    public AppUser login(@RequestBody AppUser user) throws ItemNotFoundException {
+    public User login(@RequestBody User user) throws ItemNotFoundException {
         System.out.println("yey");
         return authService.select(user.getUsername(),user.getPassword());
     }

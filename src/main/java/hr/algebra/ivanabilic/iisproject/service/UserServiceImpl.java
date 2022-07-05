@@ -6,6 +6,7 @@ import hr.algebra.ivanabilic.iisproject.exception.ItemAlreadyExistsException;
 import hr.algebra.ivanabilic.iisproject.exception.ItemNotFoundException;
 import hr.algebra.ivanabilic.iisproject.repository.AuthRepository;
 import hr.algebra.ivanabilic.iisproject.repository.PictureRepository;
+import hr.algebra.ivanabilic.iisproject.responseEntity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AppUser select(String username, String password) throws ItemNotFoundException {
+    public User select(String username, String password) throws ItemNotFoundException {
         Optional<AppUser> byUsername = authRepository.findByUsername(username);
 
 
@@ -39,21 +40,25 @@ public class UserServiceImpl implements UserService {
             String hash_pw= byUsername.get().getPassword().substring((prefix.length()));
 
             if (BCrypt.checkpw(password,hash_pw)) {
-                return byUsername.get();
+
+                return User.convert(byUsername.get());
+
             }
         }
         throw new ItemNotFoundException();
     }
 
     @Override
-    public AppUser create(AppUser user) throws ItemAlreadyExistsException {
+    public User create(User user) throws ItemAlreadyExistsException {
         String salt = BCrypt.gensalt();
-        user.setSalt(salt);
-        user.setPassword(BCrypt.hashpw(user.getPassword(),salt ));
+        AppUser appUser = User.convert(user);
+        appUser.setSalt(salt);
+        appUser.setPassword(BCrypt.hashpw(user.getPassword(),salt ));
         Optional<AppUser> byUsername = authRepository.findByUsername(user.getUsername());
         if (!byUsername.isPresent()) {
-            AppUser save = authRepository.save(user);
-            return save;
+            AppUser save = authRepository.save(appUser);
+            user.setId(save.getId());
+            return user;
         }
         throw new ItemAlreadyExistsException();
     }
